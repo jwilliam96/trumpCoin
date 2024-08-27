@@ -4,23 +4,33 @@ import { useEffect, useState } from 'react';
 
 const Countdown = () => {
   const initialTime = 24 * 60 * 60; // 24 horas en segundos
+
+  // Estado para el tiempo restante
   const [time, setTime] = useState(initialTime);
 
   useEffect(() => {
-    // Asegurarnos de que estamos en el cliente
     if (typeof window !== 'undefined') {
-      const savedTime = localStorage.getItem('countdown');
-      setTime(savedTime ? parseInt(savedTime, 10) : initialTime);
+      // Obtener el tiempo de inicio guardado en localStorage
+      const startTime = localStorage.getItem('countdown-start-time');
 
+      // Si no existe, guardar el tiempo de inicio actual
+      if (!startTime) {
+        const now = Date.now();
+        localStorage.setItem('countdown-start-time', now.toString());
+        setTime(initialTime);
+      } else {
+        const elapsedTime = Math.floor((Date.now() - parseInt(startTime, 10)) / 1000);
+        const remainingTime = Math.max(initialTime - elapsedTime, 0);
+        setTime(remainingTime);
+      }
+
+      // Intervalo para actualizar el contador cada segundo
       const interval = setInterval(() => {
-        setTime((prevTime) => {
-          const newTime = prevTime > 0 ? prevTime - 1 : 0;
-          localStorage.setItem('countdown', newTime.toString());
-          return newTime;
-        });
+        setTime((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
       }, 1000);
 
-      return () => clearInterval(interval); // Limpia el intervalo cuando el componente se desmonta
+      // Limpieza del intervalo cuando el componente se desmonta
+      return () => clearInterval(interval);
     }
   }, [initialTime]);
 
