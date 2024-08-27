@@ -1,29 +1,38 @@
-"use client"
+"use client";
 
 import { useEffect, useState } from 'react';
 
 const Countdown = () => {
-  const [time, setTime] = useState(24 * 60 * 60); // 24 horas en segundos
+  const initialTime = 24 * 60 * 60; // 24 horas en segundos
+  const [time, setTime] = useState(initialTime);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setTime((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
-    }, 1000);
+    // Asegurarnos de que estamos en el cliente
+    if (typeof window !== 'undefined') {
+      const savedTime = localStorage.getItem('countdown');
+      setTime(savedTime ? parseInt(savedTime, 10) : initialTime);
 
-    return () => clearInterval(interval); // Limpia el intervalo cuando el componente se desmonta
-  }, []);
+      const interval = setInterval(() => {
+        setTime((prevTime) => {
+          const newTime = prevTime > 0 ? prevTime - 1 : 0;
+          localStorage.setItem('countdown', newTime.toString());
+          return newTime;
+        });
+      }, 1000);
+
+      return () => clearInterval(interval); // Limpia el intervalo cuando el componente se desmonta
+    }
+  }, [initialTime]);
 
   const formatTime = (time: number) => {
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time % 3600) / 60);
     const seconds = time % 60;
 
-    // Convertimos las horas, minutos y segundos en strings de 2 dígitos
     const formattedHours = String(hours).padStart(2, '0');
     const formattedMinutes = String(minutes).padStart(2, '0');
     const formattedSeconds = String(seconds).padStart(2, '0');
 
-    // Devolvemos todos los dígitos como un array de caracteres
     return [formattedHours, formattedMinutes, formattedSeconds];
   };
 
