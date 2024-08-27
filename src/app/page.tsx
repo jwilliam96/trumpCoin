@@ -58,7 +58,7 @@ export default function Home() {
               <span className="text-white text-2xl">Discord</span>
             </nav>
           </Link> */}
-          <Image src={discord} alt="discord" className="mx-auto mt-8 sm:hidden" />
+          <Link href={"https://discord.gg/78gDJjSz"}><Image src={discord} alt="discord" className="mx-auto mt-8 sm:hidden" /></Link>
         </div>
 
         {/* ABOUT  */}
