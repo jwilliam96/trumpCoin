@@ -13,6 +13,7 @@ import Link from "next/link";
 
 export default function Home() {
 
+
   return (
 
     <div className="relative min-h-screen bg-[#1A1A26]">
