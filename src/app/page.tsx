@@ -78,7 +78,7 @@ export default function Home() {
               2. Get some Solana (SOL) in your wallet. If you are transferring some SOL to your wallet, make sure to verify the address to avoid losing your funds.
             </li>
             <li>
-              3. Swap your SOL for PACO. Go to radium.io and connect your wallet. Then, swap your SOL for PACO. The contract address is right below if you need it:
+              3. Swap your SOL for trump-coin. Go to radium.io and connect your wallet. Then, swap your SOL for trump-coin. The contract address is right below if you need it:
             </li>
           </ul>
         </div>
