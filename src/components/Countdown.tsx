@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 
 interface Props {
-  horas: number
-  minutos: number
-  segundos: number
+  horas: string;
+  minutos: string;
+  segundos: string;
 }
 
 const Countdown = () => {
@@ -36,9 +36,15 @@ const Countdown = () => {
     const fechaActual: any = new Date();
     const diferencia = fechaObjetivo - fechaActual;
 
-    const segundos = Math.floor((diferencia / 1000) % 60);
-    const minutos = Math.floor((diferencia / 1000 / 60) % 60);
-    const horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24);
+    const segundos = Math.floor((diferencia / 1000) % 60)
+      .toString()
+      .padStart(2, "0");
+    const minutos = Math.floor((diferencia / 1000 / 60) % 60)
+      .toString()
+      .padStart(2, "0");
+    const horas = Math.floor((diferencia / (1000 * 60 * 60)) % 24)
+      .toString()
+      .padStart(2, "0");
 
     setTimeLeft({ horas, minutos, segundos });
   };
@@ -46,13 +52,13 @@ const Countdown = () => {
   if (!timeLeft) return <div>Cargando...</div>;
 
   return (
-    <div className="max-w-min absolute z-50 ">
+    <div className="max-w-min absolute z-50">
       <div className="flex pl-8 text-4xl tracking-[25px] lg:tracking-[16px] lg:pl-5 2xl:text-5xl 2xl:pl-8 2xl:tracking-[27px]">
-        <p className="rounded-lg">{timeLeft?.horas}</p>
+        <p className="rounded-lg">{timeLeft.horas}</p>
         <p className="rounded-lg pl-[10px] lg:pl-2 2xl:pl-[12px]">
-          {timeLeft?.minutos}
+          {timeLeft.minutos}
         </p>
-        <p className="rounded-lg pl-2 lg:pl-1">{timeLeft?.segundos}</p>
+        <p className="rounded-lg pl-2 lg:pl-1">{timeLeft.segundos}</p>
       </div>
     </div>
   );

@@ -5,7 +5,6 @@ import bandera from "/public/image/bandera.png"
 import medalla from "/public/image/medalla.png"
 import Countdown from "@/components/Countdown";
 import { GoStarFill } from "react-icons/go";
-import { FaDiscord } from "react-icons/fa";
 import time from "/public/image/time.png"
 import { texto } from "@/ui/font";
 import Image from "next/image";
