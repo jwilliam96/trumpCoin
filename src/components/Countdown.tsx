@@ -16,25 +16,29 @@ const Countdown = () => {
       const res = await fetch("/api/getCounter");
       const data = await res.json();
 
-      // Calcular la diferencia de tiempo inicial
       const fechaObjetivo = new Date(data);
       updateCountdown(fechaObjetivo);
 
-      // Actualizar el contador cada segundo
       const intervalId = setInterval(() => {
-        updateCountdown(fechaObjetivo);
+        updateCountdown(fechaObjetivo, intervalId);
       }, 1000);
 
-      // Limpiar el intervalo al desmontar el componente
       return () => clearInterval(intervalId);
     };
 
     fetchFechaObjetivo();
   }, []);
 
-  const updateCountdown = (fechaObjetivo: any) => {
-    const fechaActual: any = new Date();
-    const diferencia = fechaObjetivo - fechaActual;
+  const updateCountdown = (fechaObjetivo: Date, intervalId?: NodeJS.Timeout) => {
+    const fechaActual = new Date();
+    const diferencia = fechaObjetivo.getTime() - fechaActual.getTime();
+
+    if (diferencia <= 0) {
+      // Si el tiempo ha llegado a cero o es negativo, detener el contador y establecer a "00:00:00"
+      clearInterval(intervalId);
+      setTimeLeft({ horas: "00", minutos: "00", segundos: "00" });
+      return;
+    }
 
     const segundos = Math.floor((diferencia / 1000) % 60)
       .toString()
@@ -54,11 +58,11 @@ const Countdown = () => {
   return (
     <div className="max-w-min absolute z-50">
       <div className="flex pl-8 text-4xl tracking-[25px] lg:tracking-[16px] lg:pl-5 2xl:text-5xl 2xl:pl-8 2xl:tracking-[27px]">
-        <p className="rounded-lg">00</p>
+        <p className="rounded-lg">{timeLeft.horas}</p>
         <p className="rounded-lg pl-[10px] lg:pl-2 2xl:pl-[12px]">
-          00
+          {timeLeft.minutos}
         </p>
-        <p className="rounded-lg pl-2 lg:pl-1">00</p>
+        <p className="rounded-lg pl-2 lg:pl-1">{timeLeft.segundos}</p>
       </div>
     </div>
   );
