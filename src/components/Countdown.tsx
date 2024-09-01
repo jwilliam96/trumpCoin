@@ -54,11 +54,11 @@ const Countdown = () => {
   return (
     <div className="max-w-min absolute z-50">
       <div className="flex pl-8 text-4xl tracking-[25px] lg:tracking-[16px] lg:pl-5 2xl:text-5xl 2xl:pl-8 2xl:tracking-[27px]">
-        <p className="rounded-lg">{timeLeft.horas}</p>
+        <p className="rounded-lg">00</p>
         <p className="rounded-lg pl-[10px] lg:pl-2 2xl:pl-[12px]">
-          {timeLeft.minutos}
+          00
         </p>
-        <p className="rounded-lg pl-2 lg:pl-1">{timeLeft.segundos}</p>
+        <p className="rounded-lg pl-2 lg:pl-1">00</p>
       </div>
     </div>
   );
